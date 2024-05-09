@@ -7,7 +7,7 @@ import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
 
 export default {
-  components:{
+  components: {
     AppHeader,
     AppMain,
   },
@@ -34,36 +34,37 @@ export default {
       axios.get(apiUrl, { params: paramsObj }).then((resp) => {
         // console.log("ciao", resp.data.results);
         store.movieList = resp.data.results;
-        
+
       }).finally(() => {
-        
+
       });
 
       this.callTvApi();
     },
 
-    callTvApi(){
+    callTvApi() {
       const paramsObj = {
         api_key: store.apiKey,
         query: store.searchQuery,
       };
 
       const apiUrl = "https://api.themoviedb.org/3/search/tv";
-    
+
       axios.get(apiUrl, { params: paramsObj }).then((resp) => {
         // console.log("ciao", resp.data.results);
         store.tvList = resp.data.results;
       });
 
-      
+
     }
   }
 }
 </script>
 
 <template>
-
-  <AppHeader @clicked="callMovieApi"/>
+  <i class="fa-regular fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+  <AppHeader @clicked="callMovieApi" @keyup="callMovieApi"/>
 
   <AppMain />
 

@@ -12,15 +12,24 @@ export default {
     data() {
         return {
             isTitleRepeated: false,
+            title: "",
+            ogTitle: "",
+            ogLang: "",
+            rate: ""
         }
     },
 
     created() {
+        if (this.tvInfo !== undefined || this.movieInfo !== undefined) {
+            this.title = (this.isMovie) ? this.movieInfo.title : this.tvInfo.name;
+            this.ogTitle = (this.isMovie) ? this.movieInfo.original_title : this.tvInfo.original_name;
+            console.log(this.title);
+        }
 
-        console.log(this.movieInfo);
-
-        if (this.tvInfo != undefined && this.movieInfo != undefined )
+        if (this.tvInfo != undefined && this.movieInfo != undefined) {
+            console.log(this.tvInfo.poster_path);
             this.checkTitles();
+        }
     },
 
     methods: {
@@ -52,8 +61,14 @@ export default {
             }
         },
 
-        getBackImage(imageName){
-            return `https://image.tmdb.org/t/p/w342/${imageName}`;
+        getBackImage(imageName) {
+
+            if (imageName !== null) {
+                return `https://image.tmdb.org/t/p/w342/${imageName}`;
+            } else {
+                return new URL("../assets/img/blank_poster.jpg", import.meta.url);
+            }
+
         }
 
     }
@@ -64,11 +79,12 @@ export default {
     <div class="col-3">
         <div class="mycard text-center">
             <img :src="getBackImage((isMovie) ? movieInfo.poster_path : tvInfo.poster_path)" alt="">
+            <!-- <img src="../assets/img/blank_poster.jpg" alt=""> -->
             <div>
-                {{ (isMovie) ? movieInfo.title : tvInfo.name }}
+                {{ this.title }}
             </div>
             <div v-if="isTitleRepeated">
-                {{ (isMovie) ? movieInfo.original_title : tvInfo.original_man }}
+                {{ ogTitle }}
             </div>
 
             <div>
@@ -93,7 +109,7 @@ export default {
     margin-bottom: 5px;
     min-height: 150px;
     border: 1px solid black;
-    
+
     img {
         min-width: 100%;
         max-width: 100%;
