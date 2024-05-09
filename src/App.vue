@@ -35,6 +35,8 @@ export default {
         // console.log("ciao", resp.data.results);
         store.movieList = resp.data.results;
         
+      }).finally(() => {
+        
       });
 
       this.callTvApi();
