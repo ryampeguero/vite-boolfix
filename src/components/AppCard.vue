@@ -15,7 +15,8 @@ export default {
             title: "",
             ogTitle: "",
             ogLang: "",
-            rate: ""
+            rate: "",
+            poster: "",
         }
     },
 
@@ -24,8 +25,12 @@ export default {
             this.title = (this.isMovie) ? this.movieInfo.title : this.tvInfo.name;
             this.ogTitle = (this.isMovie) ? this.movieInfo.original_title : this.tvInfo.original_name;
             this.ogLang = (this.isMovie) ? this.fixFlags(this.movieInfo.original_language) : this.fixFlags(this.tvInfo.original_language);
-            this.rate = (this.isMovie) ? this.movieInfo.vote_count : this.tvInfo.vote_count;
-            console.log(this.title);
+            this.rate = this.transformVote((this.isMovie) ? this.movieInfo.vote_average : this.tvInfo.vote_average);
+            this.poster = (this.isMovie) ? this.movieInfo.poster_path : this.tvInfo.poster_path;
+
+            // console.log("normale", this.rate);
+            // console.warn("arrontodato", Math.floor(parseInt(this.rate) / 2));
+
         }
 
         if (this.tvInfo != undefined && this.movieInfo != undefined) {
@@ -35,6 +40,10 @@ export default {
     },
 
     methods: {
+        transformVote(vote) {
+            return Math.floor(parseInt(vote) / 2);
+        },
+
         fixFlags(flagName) {
             switch (flagName) {
                 case "en":
@@ -80,8 +89,8 @@ export default {
 <template>
     <div class="col-3">
         <div class="mycard text-center">
-            <img :src="getBackImage((isMovie) ? movieInfo.poster_path : tvInfo.poster_path)" alt="">
-            <!-- <img src="../assets/img/blank_poster.jpg" alt=""> -->
+            <img :src="getBackImage(poster)" alt="">
+
             <div>
                 {{ this.title }}
             </div>
@@ -94,11 +103,10 @@ export default {
             </div>
 
             <div>
-                {{ rate }}
+                <i v-for="index in rate" class="fa-solid fa-star"></i>
+                <i v-for="index in 5 - rate" class="fa-regular fa-star"></i>
+
             </div>
-
-            <img src="https://image.tmdb.org/t/p/w342/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" alt="">
-
 
         </div>
     </div>

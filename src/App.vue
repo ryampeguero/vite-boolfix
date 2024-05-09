@@ -24,6 +24,7 @@ export default {
 
   methods: {
     callMovieApi() {
+      store.movieList = "";
       const paramsObj = {
         api_key: store.apiKey,
         query: store.searchQuery,
@@ -35,14 +36,12 @@ export default {
         // console.log("ciao", resp.data.results);
         store.movieList = resp.data.results;
 
-      }).finally(() => {
-
-      });
-
+      })
       this.callTvApi();
     },
 
     callTvApi() {
+      store.tvList = "";
       const paramsObj = {
         api_key: store.apiKey,
         query: store.searchQuery,
@@ -62,8 +61,6 @@ export default {
 </script>
 
 <template>
-  <i class="fa-regular fa-star"></i>
-  <i class="fa-solid fa-star"></i>
   <AppHeader @clicked="callMovieApi" @keyup.enter="callMovieApi"/>
 
   <AppMain />
