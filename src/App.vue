@@ -4,10 +4,12 @@ import axios from "axios";
 
 //Components
 import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
 
 export default {
   components:{
     AppHeader,
+    AppMain,
   },
 
   data() {
@@ -21,20 +23,37 @@ export default {
   },
 
   methods: {
-    callApi() {
+    callMovieApi() {
       const paramsObj = {
         api_key: store.apiKey,
         query: store.searchQuery,
       };
 
-      let apiUrl = "https://api.themoviedb.org/3/search/movie";
-      if (!store.isMovie) {
-        apiUrl = "https://api.themoviedb.org/3/search/tv";
-      }
+      const apiUrl = "https://api.themoviedb.org/3/search/movie";
 
       axios.get(apiUrl, { params: paramsObj }).then((resp) => {
-        console.log("ciao", resp.data.results);
+        // console.log("ciao", resp.data.results);
+        store.movieList = resp.data.results;
+        
       });
+
+      this.callTvApi();
+    },
+
+    callTvApi(){
+      const paramsObj = {
+        api_key: store.apiKey,
+        query: store.searchQuery,
+      };
+
+      const apiUrl = "https://api.themoviedb.org/3/search/tv";
+    
+      axios.get(apiUrl, { params: paramsObj }).then((resp) => {
+        // console.log("ciao", resp.data.results);
+        store.tvList = resp.data.results;
+      });
+
+      
     }
   }
 }
@@ -42,7 +61,9 @@ export default {
 
 <template>
 
-  <AppHeader @clicked="callApi"/>
+  <AppHeader @clicked="callMovieApi"/>
+
+  <AppMain />
 
 </template>
 
