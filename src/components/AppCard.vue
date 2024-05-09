@@ -11,14 +11,16 @@ export default {
 
     data() {
         return {
-
+            isTitleRepeated: false,
         }
     },
 
     created() {
+
         console.log(this.movieInfo);
-        
-        console.log(this.fixFlags("en"));
+
+        if (this.tvInfo != undefined && this.movieInfo != undefined )
+            this.checkTitles();
     },
 
     methods: {
@@ -42,6 +44,16 @@ export default {
             }
 
             return flagName;
+        },
+
+        checkTitles() {
+            if (this.movieInfo.original_title !== this.movieInfo.title && this.tvInfo.original_man !== this.tvInfo.name) {
+                this.isTitleRepeated = true;
+            }
+        },
+
+        getBackImage(imageName){
+            return `https://image.tmdb.org/t/p/w342/${imageName}`;
         }
 
     }
@@ -50,23 +62,26 @@ export default {
 
 <template>
     <div class="col-3">
-        <div class="mycard">
+        <div class="mycard text-center">
+            <img :src="getBackImage((isMovie) ? movieInfo.poster_path : tvInfo.poster_path)" alt="">
             <div>
                 {{ (isMovie) ? movieInfo.title : tvInfo.name }}
             </div>
-            <div>
+            <div v-if="isTitleRepeated">
                 {{ (isMovie) ? movieInfo.original_title : tvInfo.original_man }}
             </div>
 
             <div>
-                {{ (isMovie) ? movieInfo.original_language : tvInfo.original_language }}
+                <span
+                    :class="`fi fi-${(isMovie) ? fixFlags(movieInfo.original_language) : fixFlags(tvInfo.original_language)}`"></span>
             </div>
 
             <div>
                 {{ (isMovie) ? movieInfo.vote_count : tvInfo.vote_count }}
             </div>
 
-            <span :class="`fi fi-${(isMovie) ?  fixFlags(movieInfo.original_language) : fixFlags(tvInfo.original_language) }`"></span>
+            <img src="https://image.tmdb.org/t/p/w342/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" alt="">
+
 
         </div>
     </div>
@@ -74,9 +89,17 @@ export default {
 
 <style lang="scss">
 .mycard {
-    padding: 10px;
+    // padding: 10px;
     margin-bottom: 5px;
     min-height: 150px;
     border: 1px solid black;
+    
+    img {
+        min-width: 100%;
+        max-width: 100%;
+
+        min-height: 100%;
+        max-height: 100%;
+    }
 }
 </style>
