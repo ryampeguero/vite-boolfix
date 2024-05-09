@@ -22,7 +22,7 @@ export default {
             <div class="col">
                 <!-- AppCards & Movies -->
                 <div class="container">
-                    <h3>Movie Series</h3>
+                    <h3>Movies</h3>
                     <div class="row">
                         <AppCard v-for="movie in store.movieList" :movieInfo="movie" :isMovie="store.isMovie" />
                     </div>
@@ -49,6 +49,6 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

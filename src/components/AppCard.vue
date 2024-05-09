@@ -89,22 +89,28 @@ export default {
 <template>
     <div class="col-3">
         <div class="mycard text-center">
-            <img :src="getBackImage(poster)" alt="">
-
-            <div>
-                {{ this.title }}
-            </div>
-            <div v-if="isTitleRepeated">
-                {{ ogTitle }}
+            <div class="card-front">
+                <img :src="getBackImage(poster)" alt="">
+                <!-- <p>ciao</p> -->
             </div>
 
-            <div>
-                <span :class="`fi fi-${ogLang}`"></span>
-            </div>
+            <div class="card-back">
+                <div>
+                    {{ this.title }}
+                </div>
+                <div v-if="isTitleRepeated">
+                    {{ ogTitle }}
+                </div>
 
-            <div>
-                <i v-for="index in rate" class="fa-solid fa-star"></i>
-                <i v-for="index in 5 - rate" class="fa-regular fa-star"></i>
+                <div>
+                    <span :class="`fi fi-${ogLang}`"></span>
+                </div>
+
+                <div>
+                    <i v-for="index in rate" class="fa-solid fa-star"></i>
+                    <i v-for="index in 5 - rate" class="fa-regular fa-star"></i>
+
+                </div>
 
             </div>
 
@@ -112,9 +118,10 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .mycard {
     // padding: 10px;
+    display: flex;
     margin-bottom: 5px;
     min-height: 150px;
     border: 1px solid black;
@@ -126,5 +133,27 @@ export default {
         min-height: 100%;
         max-height: 100%;
     }
+
+
+}
+
+.card-front {
+    display: flex;
+    background-image: url();
+    // background-color: red
+
+    &:hover {
+        opacity: 0;
+        font-size: 3rem;
+    }
+}
+
+.card-back {
+    opacity: 0;
+
+    &:hover {
+        opacity: 1;
+    }
+
 }
 </style>
