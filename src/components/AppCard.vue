@@ -23,6 +23,8 @@ export default {
         if (this.tvInfo !== undefined || this.movieInfo !== undefined) {
             this.title = (this.isMovie) ? this.movieInfo.title : this.tvInfo.name;
             this.ogTitle = (this.isMovie) ? this.movieInfo.original_title : this.tvInfo.original_name;
+            this.ogLang = (this.isMovie) ? this.fixFlags(this.movieInfo.original_language) : this.fixFlags(this.tvInfo.original_language);
+            this.rate = (this.isMovie) ? this.movieInfo.vote_count : this.tvInfo.vote_count;
             console.log(this.title);
         }
 
@@ -88,12 +90,11 @@ export default {
             </div>
 
             <div>
-                <span
-                    :class="`fi fi-${(isMovie) ? fixFlags(movieInfo.original_language) : fixFlags(tvInfo.original_language)}`"></span>
+                <span :class="`fi fi-${ogLang}`"></span>
             </div>
 
             <div>
-                {{ (isMovie) ? movieInfo.vote_count : tvInfo.vote_count }}
+                {{ rate }}
             </div>
 
             <img src="https://image.tmdb.org/t/p/w342/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" alt="">

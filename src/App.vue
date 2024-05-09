@@ -64,7 +64,7 @@ export default {
 <template>
   <i class="fa-regular fa-star"></i>
   <i class="fa-solid fa-star"></i>
-  <AppHeader @clicked="callMovieApi" @keyup="callMovieApi"/>
+  <AppHeader @clicked="callMovieApi" @keyup.enter="callMovieApi"/>
 
   <AppMain />
 
