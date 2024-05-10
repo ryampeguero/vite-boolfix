@@ -149,6 +149,7 @@ export default {
     display: flex;
     margin-bottom: 5px;
     min-height: 340px;
+    max-height: 340px;
     min-width: 150px;
 
     border: 1px solid black;
@@ -182,7 +183,7 @@ export default {
     top: 0px;
     left: 0px;
     z-index: -1;
-    // min-height: 100%;
+    min-height: 100%;
     max-height: 100%;
 
     min-width: 100%;
