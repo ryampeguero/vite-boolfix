@@ -17,6 +17,7 @@ export default {
             ogLang: "",
             rate: "",
             poster: "",
+            overview: "",
         }
     },
 
@@ -27,7 +28,7 @@ export default {
             this.ogLang = (this.isMovie) ? this.fixFlags(this.movieInfo.original_language) : this.fixFlags(this.tvInfo.original_language);
             this.rate = this.transformVote((this.isMovie) ? this.movieInfo.vote_average : this.tvInfo.vote_average);
             this.poster = (this.isMovie) ? this.movieInfo.poster_path : this.tvInfo.poster_path;
-
+            this.overview = (this.isMovie) ? this.movieInfo.overview : this.tvInfo.overview;
             // console.log("normale", this.rate);
             // console.warn("arrontodato", Math.floor(parseInt(this.rate) / 2));
 
@@ -88,28 +89,52 @@ export default {
 
 <template>
     <div class="col-3">
-        <div class="mycard text-center">
+        <div class="mycard">
             <div class="card-front">
                 <img :src="getBackImage(poster)" alt="">
                 <!-- <p>ciao</p> -->
             </div>
 
-            <div class="card-back">
-                <div>
-                    {{ this.title }}
+            <div class="card-back container p-4">
+                <div class="row">
+                    <div class="col">
+                        <span>Titolo: </span>
+                        <span class="card-title">{{ this.title }}</span>
+                    </div>
                 </div>
-                <div v-if="isTitleRepeated">
-                    {{ ogTitle }}
+
+                <div v-if="isTitleRepeated" class="row">
+                    <div class="col">
+                        <span>Titolo originale: </span>
+                        <span class="card-title">{{ ogTitle }}</span>
+                    </div>
                 </div>
 
                 <div>
                     <span :class="`fi fi-${ogLang}`"></span>
                 </div>
 
-                <div>
-                    <i v-for="index in rate" class="fa-solid fa-star"></i>
-                    <i v-for="index in 5 - rate" class="fa-regular fa-star"></i>
+                <div class="row">
+                    <div class="col">
+                        <span>Voto: </span>
+                        <i v-for="index in rate" class="star fa-solid fa-star"></i>
+                        <i v-for="index in 5 - rate" class="star fa-regular fa-star"></i>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col description">
+                        <span>Overview: </span>
+                        <span class="card-text">{{ overview }}</span>
+                    </div>
+                </div>
+
+                
+                <div class="row mt-2">
+                    <div class="col">
+                        <span>Attori: </span>
+                        <span class="card-text">{{ overview }}</span>
+                    </div>
                 </div>
 
             </div>
@@ -119,22 +144,21 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
 .mycard {
     // padding: 10px;
     display: flex;
     margin-bottom: 5px;
-    min-height: 310px;
+    min-height: 340px;
     min-width: 150px;
 
-    border: 1px solid blue;
+    border: 1px solid black;
 
-    //Position for the back
+    //position relative settata per nascondere il fronte della card
     position: relative;
     top: 0;
     left: 0;
     z-index: 1;
-    
+
     img {
         min-width: 100%;
         max-width: 100%;
@@ -147,12 +171,9 @@ export default {
 }
 
 .card-front {
-   
-    // display: flex; 
-    background-image: url();
-    // background-color: red
-    &:hover{
+    &:hover {
         opacity: 0;
+        display: none;
     }
 }
 
@@ -161,18 +182,45 @@ export default {
     top: 0px;
     left: 0px;
     z-index: -1;
+    // min-height: 100%;
+    max-height: 100%;
+
+    min-width: 100%;
+
     color: white;
     background-color: black;
+    font-weight: 600;
+
     // debug
-    border: 1px solid black;
-    min-height: 100%;
-    min-width: 100%;
+    // border: 1px solid black;
+    overflow-y: auto;
+
+    .star {
+        color: gold;
+    }
+
+    .card-title, .card-text {
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .description {
+        max-height: 200px;
+        overflow-y: scroll;
+        
+        // debug
+        border-bottom: 0.5px solid white;
+    }
 
     &:hover {
         z-index: 2;
+        overflow-y: auto;
     }
 
-}
-   
 
+}
 </style>
