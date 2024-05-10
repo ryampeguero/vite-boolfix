@@ -119,13 +119,22 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .mycard {
     // padding: 10px;
     display: flex;
     margin-bottom: 5px;
-    min-height: 150px;
-    border: 1px solid black;
+    min-height: 310px;
+    min-width: 150px;
 
+    border: 1px solid blue;
+
+    //Position for the back
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
     img {
         min-width: 100%;
         max-width: 100%;
@@ -138,22 +147,32 @@ export default {
 }
 
 .card-front {
-    display: flex;
+   
+    // display: flex; 
     background-image: url();
     // background-color: red
-
-    &:hover {
+    &:hover{
         opacity: 0;
-        font-size: 3rem;
     }
 }
 
 .card-back {
-    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    color: white;
+    background-color: black;
+    // debug
+    border: 1px solid black;
+    min-height: 100%;
+    min-width: 100%;
 
     &:hover {
-        opacity: 1;
+        z-index: 2;
     }
 
 }
+   
+
 </style>
